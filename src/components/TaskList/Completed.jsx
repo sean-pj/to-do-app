@@ -1,8 +1,6 @@
 import { ListGroup, Container, Row, Col} from "react-bootstrap";
-import { Link } from "react-router-dom";
 
-function TaskList() {
-
+function Completed() {
     return (
         <ListGroup className='w-25 mx-auto' data-bs-theme="dark">
             <ListGroup.Item>Cras justo odio</ListGroup.Item>
@@ -14,4 +12,4 @@ function TaskList() {
     )
 }
 
-export default TaskList
+export default Completed

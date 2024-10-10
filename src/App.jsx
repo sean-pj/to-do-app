@@ -1,22 +1,21 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
 import { Container, Row, Col} from "react-bootstrap";
 import './App.css'
 import TaskList from './components/TaskList/TaskList';
+import { Link } from "react-router-dom";
 
-function App() {
+function App({component, href, linkText}) {
   const style = {
-    backgroundColor: "#242424",  // Make sure this is a valid CSS color
+    backgroundColor: "#242424",
+    textAlign: "center",
   };
 
   return (
-    <Container style={style} className="vh-100 vw-100 d-flex justify-content-center align-items-center">
+    <Container style={style} className="vh-100 d-flex justify-content-center align-items-center">
     <Row className='w-100'>
       <Col >
-      <div>
-        <h1>To-Do App</h1>
-        <TaskList></TaskList>
+      {component}
+      <div style={{margin: "1rem"}}>
+      <Link to={href}>{linkText}</Link>
       </div>
       </Col>
     </Row>
