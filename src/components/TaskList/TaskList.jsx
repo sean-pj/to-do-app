@@ -1,4 +1,4 @@
-import { Accordion, Badge, ListGroup, Container, Row, Col, ListGroupItem} from "react-bootstrap";
+import { Button, Form, Accordion, Badge, ListGroup, Container, Row, Col, ListGroupItem} from "react-bootstrap";
 import { Link } from "react-router-dom";
 import { useState } from "react";
 
@@ -13,10 +13,22 @@ function TaskList() {
         {header: "Just some demo tasks", description: "Description 1", due: "Monday"}, 
         {header: "As an example", description: "Description 2", due: "Tuesday"}
     ]);
-    
+
+    const [headerInput, setHeader] = useState("")
+    const [descInput, setDesc] = useState("")
+    const [dueDate, setDueDate] = useState("")
+
+    const taskSubmit = (e) => {
+        e.preventDefault();
+        setTodos((todo) => [...todo, {header: headerInput, description: descInput, due: dueDate}]);
+        setHeader("");
+        setDesc("");
+        setDueDate("");
+    };
 
     return (
         //defaultActiveKey="0"
+        <>
         <Accordion className='w-25 mx-auto' data-bs-theme="dark">
             {todos.map((todo, index) => (
                 <Accordion.Item key={index} eventKey={String(index)}> 
@@ -27,6 +39,23 @@ function TaskList() {
                 </Accordion.Item>
             ))}
         </Accordion>
+        <Form onSubmit={taskSubmit}>
+            <Form.Group>
+                <Form.Label>Task Header</Form.Label>
+                <Form.Control onChange={(e) => setHeader(e.target.value)} data-bs-theme="dark" type="text" placeholder="Do Laundry" />
+            </Form.Group>
+            <Form.Group>
+                <Form.Label>Task Description</Form.Label>
+                <Form.Control onChange={(e) => setDesc(e.target.value)} data-bs-theme="dark" as="textarea" placeholder="Gather clothes and put into washing machine" rows={3} />
+            </Form.Group>
+            <Form.Group>
+                <Form.Control onChange={(e) => setDueDate(e.target.value)} data-bs-theme="dark" type="date" />
+            </Form.Group>
+            <Button variant="primary" type="submit">
+                Submit
+            </Button>
+        </Form>
+        </>
     )
 }
 
