@@ -11,20 +11,14 @@ const router = createBrowserRouter([
   {
     path: "/",
     element: <App component={ 
-    <div> 
-      <h1>To-Do App</h1> 
-      <TaskList></TaskList>
-    </div> 
-    } href="completed" linkText="Completed Task"/>,
+    <TaskList></TaskList>
+    } href="completed" linkText="Completed Task" header="To-Do"/>,
   },
   {
     path: "completed",
     element: <App component={
-      <div>
-        <h1>Completed Tasks</h1>
-        <Completed></Completed>
-      </div>
-    } href="/" linkText="Task List"/>,
+      <TaskList></TaskList>
+    } href="/" linkText="Task List" header="Completed"/>,
   },
 ]);
 

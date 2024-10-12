@@ -3,20 +3,20 @@ import './App.css'
 import TaskList from './components/TaskList/TaskList';
 import { Link } from "react-router-dom";
 
-function App({component, href, linkText}) {
+function App({component, href, linkText, header}) {
   const style = {
-    backgroundColor: "#242424",
-    textAlign: "center",
-  };
+    margin: "1rem", 
+    textAlign: "center" , 
+    display: "block"
+  }
 
   return (
-    <Container style={style} className="vh-100 d-flex justify-content-center align-items-center">
+    <Container style={{backgroundColor: "#242424"}} className="vh-100 d-flex justify-content-center align-items-center">
     <Row className='w-100'>
-      <Col >
+      <Col>
+      <h1 style={style}>{header}</h1>
       {component}
-      <div style={{margin: "1rem"}}>
-      <Link to={href}>{linkText}</Link>
-      </div>
+      <Link style={style} to={href}>{linkText}</Link>
       </Col>
     </Row>
     </Container>

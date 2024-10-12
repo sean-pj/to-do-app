@@ -1,16 +1,24 @@
-import { ListGroup, Container, Row, Col} from "react-bootstrap";
+import { Accordion, ListGroup, Container, Row, Col, ListGroupItem} from "react-bootstrap";
 import { Link } from "react-router-dom";
 
 function TaskList() {
 
     return (
-        <ListGroup className='w-25 mx-auto' data-bs-theme="dark">
-            <ListGroup.Item>Cras justo odio</ListGroup.Item>
-            <ListGroup.Item>Dapibus ac facilisis in</ListGroup.Item>
-            <ListGroup.Item>Morbi leo risus</ListGroup.Item>
-            <ListGroup.Item>Porta ac consectetur ac</ListGroup.Item>
-            <ListGroup.Item>Vestibulum at eros</ListGroup.Item>
-        </ListGroup>
+        //defaultActiveKey="0"
+        <Accordion className='w-25 mx-auto' data-bs-theme="dark">
+            <Accordion.Item eventKey="0"> 
+                <Accordion.Header>Example Task #1</Accordion.Header>
+                <Accordion.Body>
+                Description 2
+                </Accordion.Body>
+            </Accordion.Item>
+            <Accordion.Item eventKey="1">
+                <Accordion.Header>Example Task #2</Accordion.Header>
+                <Accordion.Body>
+                Description 1
+                </Accordion.Body>
+            </Accordion.Item>
+        </Accordion>
     )
 }
 
