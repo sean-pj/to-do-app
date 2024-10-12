@@ -30,6 +30,10 @@ form > *:not(button) {
   width: 25%;
 }
 
+form > div:has(textarea) {
+  width: 30%;
+}
+
 .form-label {
   color: white;
 }

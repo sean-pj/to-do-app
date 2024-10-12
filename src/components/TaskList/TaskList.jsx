@@ -26,18 +26,25 @@ function TaskList() {
         setDueDate("");
     };
 
+    const deleteTask = (index) => {
+        //Learned from https://dev.to/collegewap/how-to-delete-an-item-from-the-state-array-in-react-kl
+        setTodos(todo => todo.filter((_,i) => i !== index))
+    }
+
     return (
         //defaultActiveKey="0"
         <>
-        <Accordion className='w-25 mx-auto' data-bs-theme="dark">
-            {todos.map((todo, index) => (
-                <Accordion.Item key={index} eventKey={String(index)}> 
-                <Accordion.Header>{todo.header} <ToDoBadge dueDate={todo.due} /> </Accordion.Header>
+        <Accordion className='w-50 mx-auto' data-bs-theme="dark">
+            {todos.map((todo, index) => { 
+                return(
+                <Accordion.Item style={{position: "relative"}} key={index} eventKey={String(index)}> 
+                <Accordion.Header> {todo.header} <ToDoBadge dueDate={todo.due} /></Accordion.Header>
                 <Accordion.Body>
                 {todo.description}
                 </Accordion.Body>
+                <Button onClick={() => deleteTask(index)} style={{position: "absolute", left: "105%", bottom: "10%"}} variant="outline-danger">Delete</Button>
                 </Accordion.Item>
-            ))}
+            )})}
         </Accordion>
         <Form onSubmit={taskSubmit}>
             <Form.Group>
