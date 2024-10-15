@@ -6,11 +6,11 @@ import { useState } from "react";
 
 function App({href, linkText, header}) {
   const [todos, setTodos] = useState([
-    {header: "Just some demo tasks", description: "Description 1", due: "Monday"}, 
-    {header: "As an example", description: "Description 2", due: "Tuesday"}
+    {header: "Just some demo tasks", description: "Description 1", due: "Monday", badgeColor: "secondary"}, 
+    {header: "As an example", description: "Description 2", due: "Tuesday", badgeColor: "secondary"}
   ]);
 
-  const [completed, setCompleted] = useState([{header: "Demo completed", description: "Description 1", due: "Monday"}]);
+  const [completed, setCompleted] = useState([{header: "Demo completed", description: "Description 1", due: "Monday", badgeColor: "secondary"}]);
 
   const style = {
     margin: "1rem",
@@ -23,7 +23,9 @@ function App({href, linkText, header}) {
     <Row className='w-100'>
       <Col>
       <h1 style={style}>{header}</h1>
-      {header == "To-Do" ? <TaskList tasks={todos} setTasks={(tasks) => setTodos(tasks)} setCompleted={(completed) => setCompleted(completed)}></TaskList> : <TaskList tasks={completed}></TaskList>}
+      {header == "To-Do" ? 
+      <TaskList completed={false} tasks={todos} setTasks={(tasks) => setTodos(tasks)} setCompleted={(completed) => setCompleted(completed)}></TaskList> : 
+      <TaskList completed={true} tasks={completed} setTasks={(tasks) => setTodos(tasks)} setCompleted={(completed) => setCompleted(completed)}></TaskList>}
       <Link style={style} to={href}>{linkText}</Link>
       </Col>
     </Row>
