@@ -13,7 +13,7 @@ function App({href, linkText, header}) {
   const [completed, setCompleted] = useState([{header: "Demo completed", description: "Description 1", due: "Monday"}]);
 
   const style = {
-    margin: "1rem", 
+    margin: "1rem",
     textAlign: "center" , 
     display: "block"
   }

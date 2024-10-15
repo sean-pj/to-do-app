@@ -16,22 +16,8 @@ a:hover {
   text-decoration: underline;
 }
 
-form {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-} 
-
-form > * {
-  margin-top: 1rem;
-}
-
-form > *:not(button) {
-  width: 25%;
-}
-
-form > div:has(textarea) {
-  width: 30%;
+form, form > *{
+  margin: 1rem;
 }
 
 .form-label {
