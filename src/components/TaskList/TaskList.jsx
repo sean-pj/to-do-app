@@ -3,8 +3,7 @@ import { Link } from "react-router-dom";
 import { useState } from "react";
 import { useAccordionButton } from 'react-bootstrap/AccordionButton';
 
-
-
+//Custom accordion toggle button
 function CustomToggle({ children, eventKey }) {
     //Adapted from https://react-bootstrap.netlify.app/docs/components/accordion
     const decoratedOnClick = useAccordionButton(eventKey, () =>
@@ -46,27 +45,38 @@ function TaskList({tasks, setTasks, setCompleted, completed}) {
     return (
         //defaultActiveKey="0"
         <>
+        {/* Tasks are divided into accordions */}
         <Accordion className='w-50 mx-auto' data-bs-theme="dark">
             {tasks.map((todo, index) => { 
                 return(
                 <Accordion.Item style={{position: "relative"}} key={index} eventKey={String(index)}> 
                 <Accordion.Header> 
                     {todo.header} 
+                    {/* Due date badge and priority tag */}
                     <Badge style={{marginLeft: "1rem"}} bg="secondary">{todo.due}</Badge>
-                    <Badge style={{marginLeft: "1rem"}} bg={todo.badgeColor}>{todo.badgeColor == "danger" ? "High" : todo.badgeColor == "warning" ? "Moderate" : todo.badgeColor == "success" ? "Low" : "None"  }</Badge> 
+                    <Badge style={{marginLeft: "1rem"}} bg={todo.badgeColor}>
+                        {todo.badgeColor == "danger" ? "High" 
+                        : todo.badgeColor == "warning" ? "Moderate" 
+                        : todo.badgeColor == "success" ? "Low" 
+                        : "None"  }
+                    </Badge> 
                     </Accordion.Header>
                 <Accordion.Body>
-                {todo.description}
+                    {todo.description}
                 </Accordion.Body>
+                {/* Complete/Remove/Delete Buttons */}
                 <div style={{position: "absolute", left: "105%", bottom: "10%", style: "inline", width: "14rem"}}>
-                {completed ? <Button onClick={() => uncompleteTask(todo,index)} variant="warning">Remove</Button> : <Button onClick={() => completeTask(todo, index)} variant="success">Complete</Button>}
+                {completed ? <Button onClick={() => uncompleteTask(todo,index)} variant="warning">Remove</Button> 
+                : <Button onClick={() => completeTask(todo, index)} variant="success">Complete</Button>}
                 <Button style={{marginLeft: "1rem"}} onClick={() => deleteTask(todo, index)} variant="outline-danger">Delete</Button> 
                 </div>
                 </Accordion.Item>
             )})}
         </Accordion>
-        {setTasks != null && 
+        {/* Form for task creation */}
+        {!completed && 
         <Accordion className='w-50 mx-auto' data-bs-theme="dark">
+            {/* create form button */}
             <CustomToggle eventKey="createTaskForm">+</CustomToggle>
             <Accordion.Item eventKey="createTaskForm">
                 <Accordion.Body>
@@ -104,7 +114,6 @@ function TaskList({tasks, setTasks, setCompleted, completed}) {
                     </Form>
                 </Accordion.Body>
             </Accordion.Item>
-
         </Accordion>
         }
         </>

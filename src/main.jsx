@@ -3,7 +3,6 @@ import { createRoot } from 'react-dom/client'
 import App from './App.jsx'
 import '../node_modules/bootstrap/dist/css/bootstrap.min.css';
 import './index.css'
-import Completed from './components/TaskList/Completed.jsx';
 import TaskList from './components/TaskList/TaskList';
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 
