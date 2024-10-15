@@ -6,10 +6,9 @@ import { useAccordionButton } from 'react-bootstrap/AccordionButton';
 //Custom accordion toggle button
 function CustomToggle({ children, eventKey }) {
     //Adapted from https://react-bootstrap.netlify.app/docs/components/accordion
-    const decoratedOnClick = useAccordionButton(eventKey);
   
     return (
-      <Button className="mx-auto" style={{display:"block", margin: "1rem"}} type="button" variant="primary" onClick={decoratedOnClick} >{children} </Button>
+      <Button className="mx-auto" style={{display:"block", margin: "1rem"}} type="button" variant="primary" onClick={useAccordionButton(eventKey)} >{children} </Button>
     );
   }
 
@@ -18,11 +17,12 @@ function TaskList({tasks, setTasks, setCompleted, completed}) {
     const [headerInput, setHeader] = useState("")
     const [descInput, setDesc] = useState("")
     const [dueDate, setDueDate] = useState("")
-    const [badgeColor, setBadgeColor] = useState("secondary")
+    const [badge, setBadge] = useState("None")
+    const [filter, setFilter] = useState("None")
 
     const taskSubmit = (e) => {
         e.preventDefault();
-        setTasks((todo) => [...todo, {header: headerInput, description: descInput, due: dueDate, badgeColor: badgeColor}]);
+        setTasks((todo) => [...todo, {header: headerInput, description: descInput, due: dueDate, taskBadgeFilter: badge}]);
     };
 
     const deleteTask = (index) => {
@@ -44,35 +44,50 @@ function TaskList({tasks, setTasks, setCompleted, completed}) {
         deleteCompleted(index)
     };
 
+    const updateFilter = (e) => {
+       setFilter(e.target.value)
+    }
+
     return (
         //defaultActiveKey="0"
         <>
+        <Form className="mx-auto w-50" data-bs-theme="dark" style={{color: "white"}} >
+        <Form.Check name="priority" inline type='radio' label='High' value='High' onChange={updateFilter}/>
+        <Form.Check name="priority" inline type='radio' label='Moderate' value='Moderate' onChange={updateFilter}/>
+        <Form.Check name="priority" inline type='radio' label='Low' value='Low' onChange={updateFilter}/>
+        <Form.Check name="priority" inline type='radio' label='None' value='None' defaultChecked onChange={updateFilter}/>
+        </Form>
         {/* Tasks are divided into accordions */}
         <Accordion className='w-50 mx-auto' data-bs-theme="dark">
-            {tasks.map((todo, index) => { 
+            {tasks.map((todo, index) => {
                 return(
-                <Accordion.Item style={{position: "relative"}} key={index} eventKey={String(index)}> 
-                <Accordion.Header> 
-                    {todo.header} 
-                    {/* Due date badge and priority tag */}
-                    <Badge style={{marginLeft: "1rem"}} bg="secondary">{todo.due}</Badge>
-                    <Badge style={{marginLeft: "1rem"}} bg={todo.badgeColor}>
-                        {todo.badgeColor == "danger" ? "High" 
-                        : todo.badgeColor == "warning" ? "Moderate" 
-                        : todo.badgeColor == "success" ? "Low" 
-                        : "None"  }
-                    </Badge> 
-                    </Accordion.Header>
-                <Accordion.Body>
-                    {todo.description}
-                </Accordion.Body>
-                {/* Complete/Remove/Delete Buttons */}
-                <div style={{position: "absolute", left: "105%", bottom: "10%", style: "inline", width: "14rem"}}>
-                {completed ? <Button onClick={() => uncompleteTask(todo,index)} variant="warning">Remove</Button> 
-                : <Button onClick={() => completeTask(todo, index)} variant="success">Complete</Button>}
-                <Button style={{marginLeft: "1rem"}} onClick={completed ? ()=> deleteCompleted(index) : () => deleteTask(index)} variant="outline-danger">Delete</Button> 
-                </div>
-                </Accordion.Item>
+                    <div key={index}>
+                    {/* Check if badge matches filters */}
+                    {(todo.taskBadgeFilter == filter || filter == "None") && 
+                        <Accordion.Item style={{position: "relative"}} key={index} eventKey={String(index)}> 
+                        <Accordion.Header> 
+                            {todo.header} 
+                            {/* Due date badge and priority tag */}
+                            <Badge style={{marginLeft: "1rem"}} bg="secondary">{todo.due}</Badge>
+                            <Badge style={{marginLeft: "1rem"}} bg={todo.taskBadgeFilter == "High" ? "danger" 
+                                : todo.taskBadgeFilter == "Moderate" ? "warning"
+                                : todo.taskBadgeFilter == "Low" ? "success"
+                                : "secondary"  }>
+                                {todo.taskBadgeFilter}
+                            </Badge> 
+                            </Accordion.Header>
+                        <Accordion.Body>
+                            {todo.description}
+                        </Accordion.Body>
+                        {/* Complete/Remove/Delete Buttons */}
+                        <div style={{position: "absolute", left: "105%", bottom: "10%", style: "inline", width: "14rem"}}>
+                        {completed ? <Button onClick={() => uncompleteTask(todo,index)} variant="warning">Remove</Button> 
+                        : <Button onClick={() => completeTask(todo, index)} variant="success">Complete</Button>}
+                        <Button style={{marginLeft: "1rem"}} onClick={completed ? ()=> deleteCompleted(index) : () => deleteTask(index)} variant="outline-danger">Delete</Button> 
+                        </div>
+                        </Accordion.Item>
+                    }
+                    </div>
             )})}
         </Accordion>
         {/* Form for task creation */}
@@ -102,11 +117,11 @@ function TaskList({tasks, setTasks, setCompleted, completed}) {
                         <Row>
                             <Form.Group>
                                 <Form.Label>Badge</Form.Label>
-                                <Form.Select onChange={(e) => setBadgeColor(e.target.value)}>
-                                <option value="secondary">Open this select menu</option>
-                                <option value="danger">High</option>
-                                <option value="warning">Moderate</option>
-                                <option value="success">Low</option>
+                                <Form.Select onChange={(e) => setBadge(e.target.value)}>
+                                <option value="None">Open this select menu</option>
+                                <option value="High">High</option>
+                                <option value="Moderate">Moderate</option>
+                                <option value="Low">Low</option>
                                 </Form.Select>
                             </Form.Group>
                         </Row>

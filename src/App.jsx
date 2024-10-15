@@ -8,12 +8,12 @@ function App({href, linkText, header}) {
   
   //To-do list tasks
   const [todos, setTodos] = useState([
-    {header: "Demo tasks", description: "Description 1", due: "Monday", badgeColor: "secondary"}, 
-    {header: "examples", description: "Description 2", due: "Tuesday", badgeColor: "secondary"}
+    {header: "Demo tasks", description: "Description 1", due: "Monday", taskBadgeFilter: "None"}, 
+    {header: "examples", description: "Description 2", due: "Tuesday", taskBadgeFilter: "None"}
   ]);
 
   //Completed list tasks
-  const [completed, setCompleted] = useState([{header: "Some example completed tasks", description: "Description 1", due: "Monday", badgeColor: "secondary"}]);
+  const [completed, setCompleted] = useState([{header: "Some example completed tasks", description: "Description 1", due: "Monday", taskBadgeFilter: "None"}]);
 
   const style = {
     margin: "1rem",
