@@ -6,9 +6,7 @@ import { useAccordionButton } from 'react-bootstrap/AccordionButton';
 //Custom accordion toggle button
 function CustomToggle({ children, eventKey }) {
     //Adapted from https://react-bootstrap.netlify.app/docs/components/accordion
-    const decoratedOnClick = useAccordionButton(eventKey, () =>
-      console.log('totally custom!'),
-    );
+    const decoratedOnClick = useAccordionButton(eventKey);
   
     return (
       <Button className="mx-auto" style={{display:"block", margin: "1rem"}} type="button" variant="primary" onClick={decoratedOnClick} >{children} </Button>
@@ -32,14 +30,18 @@ function TaskList({tasks, setTasks, setCompleted, completed}) {
         setTasks(todo => todo.filter((_,i) => i !== index))
     };
 
+    const deleteCompleted = (index) => {
+        setCompleted((completed) => completed.filter((_,i) => i !== index))
+    }
+
     const completeTask = (todo, index) => {
         setCompleted((completed) => [...completed, todo])
-        setTasks(todo => todo.filter((_,i) => i !== index))
+        deleteTask(index)
     };
 
     const uncompleteTask = (todo, index) => {
         setTasks((oldToDo) => [...oldToDo, todo])
-        setCompleted((completed) => completed.filter((_,i) => i !== index))
+        deleteCompleted(index)
     };
 
     return (
@@ -68,7 +70,7 @@ function TaskList({tasks, setTasks, setCompleted, completed}) {
                 <div style={{position: "absolute", left: "105%", bottom: "10%", style: "inline", width: "14rem"}}>
                 {completed ? <Button onClick={() => uncompleteTask(todo,index)} variant="warning">Remove</Button> 
                 : <Button onClick={() => completeTask(todo, index)} variant="success">Complete</Button>}
-                <Button style={{marginLeft: "1rem"}} onClick={() => deleteTask(todo, index)} variant="outline-danger">Delete</Button> 
+                <Button style={{marginLeft: "1rem"}} onClick={completed ? ()=> deleteCompleted(index) : () => deleteTask(index)} variant="outline-danger">Delete</Button> 
                 </div>
                 </Accordion.Item>
             )})}
