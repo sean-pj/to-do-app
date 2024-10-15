@@ -8,17 +8,14 @@ import TaskList from './components/TaskList/TaskList';
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 
 const router = createBrowserRouter([
+  
   {
     path: "/",
-    element: <App component={ 
-    <TaskList></TaskList>
-    } href="completed" linkText="Completed Tasks" header="To-Do"/>,
+    element: <App href="completed" linkText="Completed Tasks" header="To-Do"/>,
   },
   {
     path: "completed",
-    element: <App component={
-      <TaskList></TaskList>
-    } href="/" linkText="Task List" header="Completed"/>,
+    element: <App href="/" linkText="Task List" header="Completed"/>,
   },
 ]);
 
@@ -27,9 +24,3 @@ createRoot(document.getElementById("root")).render(
     <RouterProvider router={router} />
   </StrictMode>
 );
-
-// createRoot(document.getElementById('root')).render(
-//   <StrictMode>
-//     <App />
-//   </StrictMode>,
-// )

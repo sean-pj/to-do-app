@@ -8,11 +8,7 @@ function ToDoBadge({dueDate}) {
     );
 }
 
-function TaskList() {
-    const [todos, setTodos] = useState([
-        {header: "Just some demo tasks", description: "Description 1", due: "Monday"}, 
-        {header: "As an example", description: "Description 2", due: "Tuesday"}
-    ]);
+function TaskList({tasks, setTasks, setCompleted}) {
 
     const [headerInput, setHeader] = useState("")
     const [descInput, setDesc] = useState("")
@@ -20,7 +16,7 @@ function TaskList() {
 
     const taskSubmit = (e) => {
         e.preventDefault();
-        setTodos((todo) => [...todo, {header: headerInput, description: descInput, due: dueDate}]);
+        setTasks((todo) => [...todo, {header: headerInput, description: descInput, due: dueDate}]);
         setHeader("");
         setDesc("");
         setDueDate("");
@@ -28,25 +24,36 @@ function TaskList() {
 
     const deleteTask = (index) => {
         //Learned from https://dev.to/collegewap/how-to-delete-an-item-from-the-state-array-in-react-kl
-        setTodos(todo => todo.filter((_,i) => i !== index))
-    }
+        setTasks(todo => todo.filter((_,i) => i !== index))
+    };
+
+    const completeTask = (todo) => {
+        setCompleted((completed) => [...completed, todo])
+    };
+
+    const uncompleteTask = (index) => {
+        setCompleted((completed) => completed.filter((_,i) => i !== index))
+    };
 
     return (
         //defaultActiveKey="0"
         <>
         <Accordion className='w-50 mx-auto' data-bs-theme="dark">
-            {todos.map((todo, index) => { 
+            {tasks.map((todo, index) => { 
                 return(
                 <Accordion.Item style={{position: "relative"}} key={index} eventKey={String(index)}> 
                 <Accordion.Header> {todo.header} <ToDoBadge dueDate={todo.due} /></Accordion.Header>
                 <Accordion.Body>
                 {todo.description}
                 </Accordion.Body>
-                <Button onClick={() => deleteTask(index)} style={{position: "absolute", left: "105%", bottom: "10%"}} variant="outline-danger">Delete</Button>
+                <div style={{position: "absolute", left: "105%", bottom: "10%", style: "inline", width: "14rem"}}>
+                {setTasks == null ? <Button onClick={() => uncompleteTask(todo)} variant="warning">Remove</Button> : <Button onClick={() => completeTask(todo)} variant="success">Complete</Button>}
+                <Button style={{marginLeft: "1rem"}} onClick={() => deleteTask(index)} variant="outline-danger">Delete</Button> 
+                </div>
                 </Accordion.Item>
             )})}
         </Accordion>
-        <Form onSubmit={taskSubmit}>
+        {setTasks != null && <Form onSubmit={taskSubmit}>
             <Form.Group>
                 <Form.Label>Task Header</Form.Label>
                 <Form.Control onChange={(e) => setHeader(e.target.value)} data-bs-theme="dark" type="text" placeholder="Do Laundry" />
@@ -61,7 +68,7 @@ function TaskList() {
             <Button variant="primary" type="submit">
                 Submit
             </Button>
-        </Form>
+        </Form>}
         </>
     )
 }
