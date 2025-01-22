@@ -9,7 +9,7 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 const router = createBrowserRouter([
   
   {
-    path: "/",
+    path: "/to-do-app/",
     element: <App href="completed" linkText="Completed Tasks" header="To-Do"/>,
   },
   {
