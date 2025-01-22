@@ -13,7 +13,7 @@ const router = createBrowserRouter([
     element: <App href="completed" linkText="Completed Tasks" header="To-Do"/>,
   },
   {
-    path: "completed",
+    path: "/to-do-app/completed",
     element: <App href="/" linkText="Task List" header="Completed"/>,
   },
 ]);
