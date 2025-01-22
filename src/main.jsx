@@ -10,11 +10,11 @@ const router = createBrowserRouter([
   
   {
     path: "/to-do-app/",
-    element: <App href="completed" linkText="Completed Tasks" header="To-Do"/>,
+    element: <App href="/to-do-app/completed" linkText="Completed Tasks" header="To-Do"/>,
   },
   {
     path: "/to-do-app/completed",
-    element: <App href="/" linkText="Task List" header="Completed"/>,
+    element: <App href="/to-do-app/" linkText="Task List" header="Completed"/>,
   },
 ]);
 
